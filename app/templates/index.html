@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block app_content %}
+    <div class='container-fluid'>
+        <h1>The CellsToCNNs Blog</h1>
+        <p>Blogging at the intersection of deep learning, cell biology, and skeeball.</p>
+        <hr>
+        <h1>Most recent post:</h1>
+        {% filter markdown %}
+            {{ Post.query.order_by('published_date').first().body }}
+        {% endfilter %}
+    </div>
+{% endblock %}

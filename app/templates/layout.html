@@ -1,0 +1,49 @@
+<html>
+{% extends "bootstrap/base.html" %}
+<head>
+{% block title %}
+    {% if title %}{{ title }} - CellsToCNNs{% else %}CellsToCNNs{% endif %}
+{% endblock %}
+
+{% block navbar %}
+    <div class="wrapper">
+        <nav id="sidebar">
+            <!-- Sidebar Header -->
+            <div class="sidebar-header">
+                <div class="sidebar-brand">CellsToCNNs</div>
+            </div>
+
+            <!-- Sidebar Links -->
+            <ul class="list-unstyled-components">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="#">About the Author</a></li><!-- TODO: update -->
+                <li><a href="#">Projects</a></li><!-- TODO: add projects dropdown -->
+                <li>Posts
+                    <!-- TODO: add search form and keywords to posts -->
+                    <ul class="list-unstyled-components">
+                        {% for post in Post.query.all() %}
+                        <li>
+                            <a href="{{ url_for('post', post_slug=post.slug) }}" class="list-group">post.short_title</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-info" role="alert">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        {% block app_content %}{% endblock %}
+    </div>
+{% endblock %}
+</html>
